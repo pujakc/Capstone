@@ -58,6 +58,37 @@ Document the entire process, including data sources, methodologies, model develo
 By following these steps and considerations, we can develop an effective machine learning model to predict future mortgage rates based on historical trends and other economic indicators.
  
 
+## Work Books
+The workbooks should be read in the following order
+
+- 01_data_collection_EDA.ipynb
+In this notebook I have imported various historical data which was collected from publicly available data from the Federal Reserve Economic Date(FRED) published by Federal Reserve Bank of  St.Louis. The data collected from individual source was then combined into a single dataframe which was used for preliminary EDA and then exported as CSV file for future use for model creationa and evaluation
+
+
+- 02_FOMC_SentimentAnalysis.ipynb
+ 
+ In this notebook I have used the historical and current FOMC(Federal Open Market Committee) meeting minutes data set from Kaggle https://www.kaggle.com/datasets/vladtasca/fomc-meeting-statements-and-minutes to perform a Sentiment Analysis on the meeting minute and analyse the impact of positive or negative sentiment on interest rate
+
+- 03_Model_creation.ipynb
+
+In this notebook I have created a Linear Regression model and 3 Ensemble models RandomForestRegressor, AdaBoostRegressor and  GradientBoostingRegressorr for Mortgage rate prediction and chosed the best one for evaluation
+
+- 04_LSTM_TimeseriesForecast_Model.ipynb
+This notebook aims to develop LSTM model to predict future values for Mortgate Rate. Several models were created and evaluated to choose th best one
+
+
+
+### Analysis
+
+The analysis process involved importing data from aforementioned data sets. After importing an extensive exploratory data analysis was performed on the dataset to check for the any anomalies in data like checking for missing values, wrong data types assignments, unrealistic data which needs corerection before the data can be fed into any machine learning model. Extensive visualizations were done with various graphs and plots. Analysis and visualization techniques were used to find how are independent variables related to check if some features can be excluded. Also, checked if interaction between the features can be created. Python was used to import, cleaning ,analysing data. Trying different approaches to address the analysis question. Different visualization techniques were used to understand answer analysis questions. Analyzed the data trends. Identified features to be fed into machine learning algorithm. 
+
+Correlation heatmap showed there was a very strong positive correlation between 30 year fixed MortgateRate(MORTGAGE30US) and various features like GS10 (10-Year Treasury Constant Maturity Rate) and FEDFUNDS(Federal Funds Rate). And strong negative correlation with GDP, CSUSHPISA(Case-Shiller U.S. National Home Price Index)
+From the analysis and visualizationit was confirmed that the 30 year Mortgage Rate is not highest currently. The interest rates very high before 1988 and has decreased with ups and downs and it seems the mortgage rates were smalles after covid 19 in 2020 and then increasing gradually with slight up and down. We can also see the with least Mortgagerate there was highest unemployment so far.The housing affordability index was in peak during the after the 2008 recesson and was decreasing with ups and down since then. It was lowest right after the Covid 19
+
+'DATE', 'MORTGAGE30US', 'FEDFUNDS', 'GS10', 'MICH', 'UNRATE', 'USREC',
+       'CSUSHPISA', 'MSACSR', 'GDP'
+
+
 ## Data Sources:
 The majority of data was collected by using publicly available data taken from the Federal Reserve Economic Data (FRED) published by the Federal Reserve Bank of St. Louis1. Below is the list of datasource
 
@@ -71,10 +102,24 @@ The majority of data was collected by using publicly available data taken from t
 
 
 
+## Data Dictionary
 
-### Analysis
+|Feature|Type|Description|
+|---|---|---|
+|DATE|datetime|The Date when the economic indicator was collected|
+|MORTGAGE30US|float|30 Year Average Fixed Mortgage Rate in the United States|
+|FEDFUNDS|float|Federal Funds Effective Rate|
+|GS10|float|Market Yield on U.S. Treasury Securities at 10-Year Constant Maturity, Quoted on an Investment Basis |
+|MICH|float|University of Michigan: Inflation Expectation|
+|UNRATE|float64|Unemployment Rate|
+|USREC|float|NBER based Recession Indicators for the United States from the Period following the Peak through the Trough |
+|CSUSHPISA|float|S&P CoreLogic Case-Shiller U.S. National Home Price Index|
+|MSACSR|object|Monthly Supply of New Houses in the United States|
+|GDP|float|Gross Domestic Product|
 
-The analysis process involved importing data from aforementioned data sets. After importing an extensive exploratory data analysis was performed on the dataset to check for the any anomalies in data like checking for missing values, wrong data types assignments, unrealistic data which needs corerection before the data can be fed into any machine learning model. Extensive visualizations were done with various graphs and plots. Analysis and visualization techniques were used to find how are independent variables related to check if some features can be excluded. Also, checked if interaction between the features can be created. Python was used to import, cleaning ,analysing data. Trying different approaches to address the analysis question. Different visualization techniques were used to understand answer analysis questions. Analyzed the data trends. Identified features to be fed into machine learning algorithm. 
+Sentiment Data
 
-Correlation heatmap showed there was a very strong positive correlation between 30 year fixed MortgateRate(MORTGAGE30US) and various features like GS10 (10-Year Treasury Constant Maturity Rate) and FEDFUNDS(Federal Funds Rate). And strong negative correlation with GDP, CSUSHPISA(Case-Shiller U.S. National Home Price Index)
-From the analysis and visualizationit was confirmed that the 30 year Mortgage Rate is not highest currently. The interest rates very high before 1988 and has decreased with ups and downs and it seems the mortgage rates were smalles after covid 19 in 2020 and then increasing gradually with slight up and down. We can also see the with least Mortgagerate there was highest unemployment so far.The housing affordability index was in peak during the after the 2008 recesson and was decreasing with ups and down since then. It was lowest right after the Covid 19
+|Date|datetime|The date of the FOMC meeting or statement release in the format YYYYMMDD|
+|Type|object|Indicator for the type of document. Statementor  Meeting minutes.|
+|Text|object|The text content of each paragraph in the meeting minutes or statements.|
+
